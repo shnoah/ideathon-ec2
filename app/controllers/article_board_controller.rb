@@ -52,12 +52,15 @@ class ArticleBoardController < ApplicationController
     def like_delete
         id = params[:id].to_i
         canceled_article = Article.find(id)
-        stat = current_user.statuses.where(article_id: id).take
-        stat.liked = false
-        stat.save
-        canceled_article.like -= 1
-        canceled_article.save
         
+ 	if current_user.statuses.where(article_id: id).take.liked == true # 8/18 4:54
+        	stat = current_user.statuses.where(article_id: id).take
+        	stat.liked = false
+        	stat.save
+        	canceled_article.like -= 1
+        	canceled_article.save
+        end
+
         redirect_to "/article_board/detailpage/#{id}"
     end
     
@@ -173,7 +176,13 @@ class ArticleBoardController < ApplicationController
         @this_post.members.each do |item|
             item.destroy
         end
-        
+       
+       @this_post.tags.each do |item|
+            item.destroy
+        end
+
+
+ 
         members = params[:member_name].gsub(/\s+/, "").split(",")
             
         members.each do |item|
@@ -183,8 +192,27 @@ class ArticleBoardController < ApplicationController
             member.save
             #member = Member.create(:name => item, :article_id => new_post.id)
         end
+	
+        tags = params[:tag].split(/[#,\s]/)
+        tags.delete("")
+        tags.each do |tag_name|
+            new_tag = Tag.find_by_tagging(tag_name)||Tag.create(:tagging => tag_name, :created_at => @this_post.id)
+            @this_post.tags << new_tag
+        end        
         
-        
+# 8/12 10:46 추가 
+
+        @all_tags = Tag.all
+        @all_tags.each do |item|
+            if item.articles.empty?
+                item.destroy
+            end
+        end
+    #여기까지	
+
+
+
+
   
         redirect_to action: "detailpage", id: @this_post.id
     end
@@ -268,11 +296,15 @@ class ArticleBoardController < ApplicationController
         @flag=0
         @this_post = Article.find(params[:id]) 
         @members = Array.new
-        
+    	@tags = Array.new
+    
         @this_post.members.each do |item|
             @members << item.name
         end
-        
+ 	
+        @this_post.tags.each do |item|
+            @tags << item.tagging
+        end       
         
         match = params[:modify_password]
         
@@ -301,7 +333,19 @@ class ArticleBoardController < ApplicationController
             tmp.save
             
             @this_post.destroy
-            
+           
+            #8/12 10:46 추가   
+                @all_tags = Tag.all
+                @all_tags.each do |item|
+                       if item.articles.empty?
+                                 item.destroy
+                       end
+                 end
+            #여기까지
+
+
+
+ 
             redirect_to '/'       
         else
             @flag = 0      

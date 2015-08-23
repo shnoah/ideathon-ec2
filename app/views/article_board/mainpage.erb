@@ -21,8 +21,8 @@
     </tr>
 
     <% @posts.each do |p| %>
-        <tr>    
-        <td><%=p.id%></td>
+        <tr> <%x=0%>    
+        <td><%=p.id%> (#<%=x%>) </td> <%x+=1%>
 
             <td><strong><a href="/article_board/detailpage/<%=p.id%>"> <%= p.title%></strong></a></td>
         </tr>

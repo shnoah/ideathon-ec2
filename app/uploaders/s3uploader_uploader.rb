@@ -16,6 +16,18 @@ class S3uploaderUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [250,250]
   end
 
+  def filename
+     "#{secure_token(10)}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+  def secure_token(length=16)
+    var = :"@#{mounted_as}_secure_token"
+    model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.hex(length/2))
+  end
+
+
+
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
