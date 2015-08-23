@@ -323,7 +323,7 @@
               
 
 
-<!--
+
            <hr style="margin: 13px 0px 13px 0px; border-color: #bfbfbf;"> 
 
                 <div class="row" style="padding: 10px 0px 10px 0px;">
@@ -335,7 +335,7 @@
                    </div>
                 </div>
            <hr style="width: 100%; margin: 5px 0px 13px 0px; border-color: #bfbfbf;">             
--->
+
 
 
 
@@ -350,12 +350,11 @@
             <div class="row">
               <div class="col-xs-12" style="text-align: center; margin-top: 50px;">
 
-	<!--
+	
                 <input class="form-style-12" id= "votes" type= "hidden" name= "votes" value="">
                 <input class="form-style-12" type= "submit" value="최종제출">
 	
-		최종제출 버튼
-	-->
+	
 	
 
 
@@ -428,10 +427,10 @@ function submitCheck() {
   vote_ary = vote_str.split(",")
   console.log(vote_ary.length)
   
-  inValid = (vote_ary.length < 3 || vote_ary.length > 6)
+  inValid = (vote_ary.length < 3 || vote_ary.length > 20)
 
   if(inValid) {
-    alert('투표 후보는 3개에서 6개까지 선택 가능합니다!');
+    alert('투표 후보는 3개에서 20개까지 선택 가능합니다!');
     return false;
   }
   else {
