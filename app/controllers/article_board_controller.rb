@@ -2,7 +2,12 @@ class ArticleBoardController < ApplicationController
   
    before_action :authenticate_user!, only: [:write, :write_process]  
 
-   
+    def top20
+
+	@articles = [1,2,3,4,5,15,21,24,40,41,50,51,52,53,48,82,83,84,86,88]
+
+    end
+	   
     def json_test ## 회원 DB json 파일 test
     
        @data_hash = Hash.new

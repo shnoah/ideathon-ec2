@@ -1,0 +1,93 @@
+
+
+
+
+<%= render :partial => "/article_board/navbar" %>
+    
+  <div class="tab-content">
+  
+<!-- RANDOM TAB -->
+<% if !params[:tag_id].nil? || params[:not_found] == 'true' %>
+<div role="tabpanel" class="tab-pane fade" id="random">
+<% elsif params[:tab] == 'random' || params[:tab].nil? %>
+<div role="tabpanel" class="tab-pane fade in active" id="random">
+<% else %>
+<div role="tabpanel" class="tab-pane fade" id="random">
+<% end %>
+  
+  <div class="col-md-12" style="height:auto;; text-align:center; border-top: 1px solid #b7b7b7; border-bottom: 1px solid #b7b7b7; background-color: #e5e5e5; margin:30px 0px 30px 0px;"> 
+    <div style="padding: 27px 0px 30px 0px;">
+      <span style="font-weight: 800; color:#727272; font-size: 120%;">TOP 20 |</span> 
+      <span style="font-weight: 500; color:#b2b2b2; font-size: 120%;">&nbsp;TOP 20을 랜덤으로 보여드림다</span>
+      <div>
+      <%#=paginate @articles%>
+      </div>
+    </div>
+    
+  </div>
+  
+
+  
+      <div class="row">
+        <% @articles.shuffle.each do |addr| %>
+		<% item = Article.find(addr) %>
+
+          <div class="col-md-3 col-md-offset-0 col-sm-12 col-xs-12 col-xs-offset-0">
+            <a href="/article_board/detailpage/<%=item.id%>">
+              <div class="thumbnail">
+                <%if item.my_image.url==nil %>
+                  <img style="border-radius: 20px; width: 100%;" src="/image/sample.png" />
+                <% else %> 
+                  <img style="border-radius: 20px; " src="<%=item.my_image.url(:thumb)%>"/>    
+                <% end %>
+                <div class="caption" style="padding-bottom: 0px;">
+              <!--8/13 3:49 변경 -->
+                  <% unless item.title.length > 14 %>
+                    <h4 style="font-weight: 800; color:#EB8E34;letter-spacing: 0px;"><%= item.title %></h4>
+                  <% else %>
+                    <h4 style="font-weight: 800; color:#EB8E34;letter-spacing: 0px;"><%= item.title.first(13)+"..." %></h4>
+                  <% end %>
+                  <div style="width:100%;height:20px">
+                  <h5 style="word-spacing: -2px; font-weight: 700; letter-spacing: 0px; color: #717171;font-size:100%" ><%= item.summary.first(20) %></h5>
+                  </div>
+                  <div style="margin-top: 1px solid white;"></div>
+                  <div style="font-weight: 700; color: #8E8E8E; margin-bottom: 1px solid black;">   <!--팀장명 오른쪽 정렬 처리-->
+                  
+                   <hr style="margin: 10px 0px 10px 0px;">
+                   <% unless item.leader_name.length > 14%>
+                     <%= item.leader_name %>팀  <br>
+                   <% else %>
+                     <%= item.leader_name.first(13)+"..." %>팀  <br>
+                   <% end %>
+              <!-- 여기까지 -->
+                     <div style="width:100%;height:20px">
+                     <% item.tags.each do |tag| %>
+                     
+                     <span style="background-color:#EFEFEF; margin-right: 5px;font-size:100%">
+                      <%= tag.tagging.first(5)%>
+                    </span>
+                    
+                      <%end%>
+                      </div>
+                   </div>
+                  <div> <!--이 div가 .caption의 아래쪽 정렬 필요-->
+                  <hr style="margin: 13px 0px 13px 0px;">
+                    <div align="center">
+                      &nbsp;<span style="font-size: 15px; padding-top: 10px; font-weight: 800; color:#EB8E34;">&nbsp; Re:<%=item.replies.count%></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+</div>
+</div>
+</div>  
+
+
+ <%= render :partial => "/article_board/bottom" %>
+
+
