@@ -323,7 +323,7 @@
               
 
 
-
+<!--
            <hr style="margin: 13px 0px 13px 0px; border-color: #bfbfbf;"> 
 
                 <div class="row" style="padding: 10px 0px 10px 0px;">
@@ -335,42 +335,14 @@
                    </div>
                 </div>
            <hr style="width: 100%; margin: 5px 0px 13px 0px; border-color: #bfbfbf;">             
-
+-->
 
 
 
             </div>
         <% end %>
         </div>
-        
-        <!--8/18 밤 12:54 변경-->
-        <% if user_signed_in? && current_user.final_entries.empty? %>
-          <form  action = "/vote_board/entry" method ="POST" onsubmit="return submitCheck();">
-            <!--이것도 8/18 추가-->
-            <div class="row">
-              <div class="col-xs-12" style="text-align: center; margin-top: 50px;">
-
-	
-                <input class="form-style-12" id= "votes" type= "hidden" name= "votes" value="">
-                <input class="form-style-12" type= "submit" value="최종제출">
-	
-	
-	
-
-
-              </div>
-            </div>
-          </form>
-        <% elsif user_signed_in? %>
-          <div class="row">
-            <div class="col-xs-12" style="text-align: center; margin-top: 50px;">
-              <a href="/vote_board/already_vote" class="form-style-12">내가 투표한 후보 보기</a>
-            </div>
-          </div>
-        <% end %>
-        <!--여기까지 8/18 추가-->
-        
-             
+        <!--
       </div>
    
           

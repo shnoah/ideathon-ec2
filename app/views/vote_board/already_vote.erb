@@ -22,6 +22,7 @@
 <h1>다른사람이 투표한 목록은,</h1><br>
 
 
+
 <%@finalall.each do |x|%>
 
 <%=User.find(x.user_id).name%>님이 <%=Article.find(x.final_id).title%>를 투표하셨습니다.<br>

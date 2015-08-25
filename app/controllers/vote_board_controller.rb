@@ -29,6 +29,10 @@ class VoteBoardController < ApplicationController
     def already_vote
       @final=current_user.final_entries
       @finalall=FinalEntry.all
+
+        
+
+
         
     end
     
