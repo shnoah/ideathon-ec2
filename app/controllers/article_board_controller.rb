@@ -4,7 +4,7 @@ class ArticleBoardController < ApplicationController
 
     def top20
 
-	@articles = [1,2,3,4,5,15,21,24,40,41,50,51,52,53,48,82,83,84,86,88]
+	@articles = [96,112,72,33,51,59,120,118,48,103,14,105,61,109,42,26,49,17,32,89]
 
     end
 	   
@@ -20,6 +20,7 @@ class ArticleBoardController < ApplicationController
     
    
     def main_board
+      
         @tags = Tag.all
         @articles = Article.all
         
@@ -287,7 +288,7 @@ class ArticleBoardController < ApplicationController
 
 #글 삭제시 비밀번호 체크    
     def pw_chk_process_d
-        @this_post = Article.find(params[:id])
+       # @this_post = Article.find(params[:id])
     end
     
 #글 수정시 비밀번호 체크    
@@ -324,37 +325,6 @@ class ArticleBoardController < ApplicationController
     
     def article_delete       
 
-        @flag=0
-        @this_post = Article.find(params[:id]) 
-        
-        match = params[:delete_password]
-        
-        if (@this_post.password==match)
-            @flag=1
-           
-            tmp = User.find(current_user.id)
-            tmp.posting_check = 0
-            tmp.my_article_id = nil
-            tmp.save
-            
-            @this_post.destroy
-           
-            #8/12 10:46 추가   
-                @all_tags = Tag.all
-                @all_tags.each do |item|
-                       if item.articles.empty?
-                                 item.destroy
-                       end
-                 end
-            #여기까지
-
-
-
- 
-            redirect_to '/'       
-        else
-            @flag = 0      
-        end          
     end
     
     

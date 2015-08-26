@@ -30,7 +30,7 @@ class VoteBoardController < ApplicationController
       @final=current_user.final_entries
       @finalall=FinalEntry.all
 
-        
+       
 
 
         
@@ -53,7 +53,7 @@ class VoteBoardController < ApplicationController
 	@user_hash = Hash.new(0) 
 
 	 #최종 투표 결과 상위 n팀을 몇명으로 할지는 아래에있는 @rank_limit 변수를 고치면 됨돠
-	@rank_limit = 2
+	@rank_limit = 20
 
 
 	win_articles_id = Array.new
