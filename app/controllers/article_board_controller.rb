@@ -288,7 +288,7 @@ class ArticleBoardController < ApplicationController
 
 #글 삭제시 비밀번호 체크    
     def pw_chk_process_d
-       # @this_post = Article.find(params[:id])
+        @this_post = Article.find(params[:id])
     end
     
 #글 수정시 비밀번호 체크    
@@ -325,10 +325,45 @@ class ArticleBoardController < ApplicationController
     
     def article_delete       
 
+    @flag=0
+        @this_post = Article.find(params[:id]) 
+        
+        match = params[:delete_password]
+        
+        if (@this_post.password==match)
+            @flag=1
+           
+            tmp = User.find(current_user.id)
+            tmp.posting_check = 0
+            tmp.my_article_id = nil
+            tmp.save
+            
+            @this_post.destroy
+            
+            #8/12 10:46 추가   
+
+
+		                @all_tags = Tag.all
+                @all_tags.each do |item|
+                    if item.articles.empty?
+                        item.destroy
+                    end
+                end
+
+          
+            redirect_to '/'       
+        else
+            @flag = 0      
+        end  
+
+
+
+
+
+
     end
     
-    
-    ##
+#                                                                                end
     def hall_of_fame
         today_best = Best.all.last
         if today_best.nil?
